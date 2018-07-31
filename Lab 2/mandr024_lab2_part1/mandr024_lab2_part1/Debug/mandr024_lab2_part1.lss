@@ -3,29 +3,29 @@ mandr024_lab2_part1.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  0000021c  2**0
+  0 .data         00000000  00800100  00800100  0000020c  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000001c8  00000000  00000000  00000054  2**1
+  1 .text         000001b8  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  0000021c  2**0
+  2 .comment      00000030  00000000  00000000  0000020c  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000024c  2**2
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000023c  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000028  00000000  00000000  0000028c  2**0
+  4 .debug_aranges 00000028  00000000  00000000  0000027c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   000008ad  00000000  00000000  000002b4  2**0
+  5 .debug_info   000008ad  00000000  00000000  000002a4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000007d9  00000000  00000000  00000b61  2**0
+  6 .debug_abbrev 000007d9  00000000  00000000  00000b51  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   000002b8  00000000  00000000  0000133a  2**0
+  7 .debug_line   000002b4  00000000  00000000  0000132a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  0000006c  00000000  00000000  000015f4  2**2
+  8 .debug_frame  0000006c  00000000  00000000  000015e0  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00000416  00000000  00000000  00001660  2**0
+  9 .debug_str    00000416  00000000  00000000  0000164c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    000000c4  00000000  00000000  00001a76  2**0
+ 10 .debug_loc    000000c4  00000000  00000000  00001a62  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000018  00000000  00000000  00001b3a  2**0
+ 11 .debug_ranges 00000018  00000000  00000000  00001b26  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -110,7 +110,7 @@ Disassembly of section .text:
   94:	de bf       	out	0x3e, r29	; 62
   96:	cd bf       	out	0x3d, r28	; 61
   98:	29 d0       	rcall	.+82     	; 0xec <main>
-  9a:	94 c0       	rjmp	.+296    	; 0x1c4 <_exit>
+  9a:	8c c0       	rjmp	.+280    	; 0x1b4 <_exit>
 
 0000009c <__bad_interrupt>:
   9c:	b1 cf       	rjmp	.-158    	; 0x0 <__vectors>
@@ -238,9 +238,9 @@ int main(void)
  14e:	8b 83       	std	Y+3, r24	; 0x03
 	
 		
-		for(unsigned char i = 0; i < 9; i++)
+		for(unsigned char i = 0; i < 8; i++)
  150:	1c 82       	std	Y+4, r1	; 0x04
- 152:	15 c0       	rjmp	.+42     	; 0x17e <main+0x92>
+ 152:	11 c0       	rjmp	.+34     	; 0x176 <main+0x8a>
 		{
 			if((GetBit(tempA, 0) == 1))
  154:	ce 01       	movw	r24, r28
@@ -250,102 +250,88 @@ int main(void)
  15c:	8a 81       	ldd	r24, Y+2	; 0x02
  15e:	9f df       	rcall	.-194    	; 0x9e <GetBit.1609>
  160:	81 30       	cpi	r24, 0x01	; 1
- 162:	39 f4       	brne	.+14     	; 0x172 <main+0x86>
+ 162:	19 f4       	brne	.+6      	; 0x16a <main+0x7e>
 			{
 				tempCount++;
  164:	89 81       	ldd	r24, Y+1	; 0x01
  166:	8f 5f       	subi	r24, 0xFF	; 255
  168:	89 83       	std	Y+1, r24	; 0x01
-				tempA = tempA>>1;
+			}
+			tempA = tempA>>1;
  16a:	8a 81       	ldd	r24, Y+2	; 0x02
  16c:	86 95       	lsr	r24
  16e:	8a 83       	std	Y+2, r24	; 0x02
- 170:	03 c0       	rjmp	.+6      	; 0x178 <main+0x8c>
-			}
-			else
-			{
-				tempA = tempA>>1;
- 172:	8a 81       	ldd	r24, Y+2	; 0x02
- 174:	86 95       	lsr	r24
- 176:	8a 83       	std	Y+2, r24	; 0x02
 		tempCount = 0x00;
 		tempA = PINA;
 		tempB = PINB;
 	
 		
-		for(unsigned char i = 0; i < 9; i++)
- 178:	8c 81       	ldd	r24, Y+4	; 0x04
- 17a:	8f 5f       	subi	r24, 0xFF	; 255
- 17c:	8c 83       	std	Y+4, r24	; 0x04
- 17e:	8c 81       	ldd	r24, Y+4	; 0x04
- 180:	89 30       	cpi	r24, 0x09	; 9
- 182:	40 f3       	brcs	.-48     	; 0x154 <main+0x68>
-				tempA = tempA>>1;
+		for(unsigned char i = 0; i < 8; i++)
+ 170:	8c 81       	ldd	r24, Y+4	; 0x04
+ 172:	8f 5f       	subi	r24, 0xFF	; 255
+ 174:	8c 83       	std	Y+4, r24	; 0x04
+ 176:	8c 81       	ldd	r24, Y+4	; 0x04
+ 178:	88 30       	cpi	r24, 0x08	; 8
+ 17a:	60 f3       	brcs	.-40     	; 0x154 <main+0x68>
+				tempCount++;
 			}
-			
+			tempA = tempA>>1;
 		}
 		
-		for(unsigned char i = 0; i < 9; i++)
- 184:	1d 82       	std	Y+5, r1	; 0x05
- 186:	15 c0       	rjmp	.+42     	; 0x1b2 <main+0xc6>
+		for(unsigned char i = 0; i < 8; i++)
+ 17c:	1d 82       	std	Y+5, r1	; 0x05
+ 17e:	11 c0       	rjmp	.+34     	; 0x1a2 <main+0xb6>
 		{
 			if((GetBit(tempB, 0) == 1))
- 188:	ce 01       	movw	r24, r28
- 18a:	06 96       	adiw	r24, 0x06	; 6
- 18c:	1c 01       	movw	r2, r24
- 18e:	60 e0       	ldi	r22, 0x00	; 0
- 190:	8b 81       	ldd	r24, Y+3	; 0x03
- 192:	85 df       	rcall	.-246    	; 0x9e <GetBit.1609>
- 194:	81 30       	cpi	r24, 0x01	; 1
- 196:	39 f4       	brne	.+14     	; 0x1a6 <main+0xba>
+ 180:	ce 01       	movw	r24, r28
+ 182:	06 96       	adiw	r24, 0x06	; 6
+ 184:	1c 01       	movw	r2, r24
+ 186:	60 e0       	ldi	r22, 0x00	; 0
+ 188:	8b 81       	ldd	r24, Y+3	; 0x03
+ 18a:	89 df       	rcall	.-238    	; 0x9e <GetBit.1609>
+ 18c:	81 30       	cpi	r24, 0x01	; 1
+ 18e:	19 f4       	brne	.+6      	; 0x196 <main+0xaa>
 			{
 				tempCount++;
- 198:	89 81       	ldd	r24, Y+1	; 0x01
- 19a:	8f 5f       	subi	r24, 0xFF	; 255
- 19c:	89 83       	std	Y+1, r24	; 0x01
-				tempB = tempB>>1;
- 19e:	8b 81       	ldd	r24, Y+3	; 0x03
- 1a0:	86 95       	lsr	r24
- 1a2:	8b 83       	std	Y+3, r24	; 0x03
- 1a4:	03 c0       	rjmp	.+6      	; 0x1ac <main+0xc0>
+ 190:	89 81       	ldd	r24, Y+1	; 0x01
+ 192:	8f 5f       	subi	r24, 0xFF	; 255
+ 194:	89 83       	std	Y+1, r24	; 0x01
 			}
-			else
-			{
-				tempB = tempB>>1;
- 1a6:	8b 81       	ldd	r24, Y+3	; 0x03
- 1a8:	86 95       	lsr	r24
- 1aa:	8b 83       	std	Y+3, r24	; 0x03
-				tempA = tempA>>1;
+			tempB = tempB>>1;
+ 196:	8b 81       	ldd	r24, Y+3	; 0x03
+ 198:	86 95       	lsr	r24
+ 19a:	8b 83       	std	Y+3, r24	; 0x03
+				tempCount++;
 			}
-			
+			tempA = tempA>>1;
 		}
 		
-		for(unsigned char i = 0; i < 9; i++)
- 1ac:	8d 81       	ldd	r24, Y+5	; 0x05
- 1ae:	8f 5f       	subi	r24, 0xFF	; 255
- 1b0:	8d 83       	std	Y+5, r24	; 0x05
- 1b2:	8d 81       	ldd	r24, Y+5	; 0x05
- 1b4:	89 30       	cpi	r24, 0x09	; 9
- 1b6:	40 f3       	brcs	.-48     	; 0x188 <main+0x9c>
-				tempB = tempB>>1;
+		for(unsigned char i = 0; i < 8; i++)
+ 19c:	8d 81       	ldd	r24, Y+5	; 0x05
+ 19e:	8f 5f       	subi	r24, 0xFF	; 255
+ 1a0:	8d 83       	std	Y+5, r24	; 0x05
+ 1a2:	8d 81       	ldd	r24, Y+5	; 0x05
+ 1a4:	88 30       	cpi	r24, 0x08	; 8
+ 1a6:	60 f3       	brcs	.-40     	; 0x180 <main+0x94>
+				tempCount++;
 			}
-			
+			tempB = tempB>>1;
 		}
 		
 		PORTC = tempCount; 
- 1b8:	88 e2       	ldi	r24, 0x28	; 40
- 1ba:	90 e0       	ldi	r25, 0x00	; 0
- 1bc:	29 81       	ldd	r18, Y+1	; 0x01
- 1be:	fc 01       	movw	r30, r24
- 1c0:	20 83       	st	Z, r18
+ 1a8:	88 e2       	ldi	r24, 0x28	; 40
+ 1aa:	90 e0       	ldi	r25, 0x00	; 0
+ 1ac:	29 81       	ldd	r18, Y+1	; 0x01
+ 1ae:	fc 01       	movw	r30, r24
+ 1b0:	20 83       	st	Z, r18
 		
 		
 		
     }
- 1c2:	bb cf       	rjmp	.-138    	; 0x13a <main+0x4e>
+ 1b2:	c3 cf       	rjmp	.-122    	; 0x13a <main+0x4e>
 
-000001c4 <_exit>:
- 1c4:	f8 94       	cli
+000001b4 <_exit>:
+ 1b4:	f8 94       	cli
 
-000001c6 <__stop_program>:
- 1c6:	ff cf       	rjmp	.-2      	; 0x1c6 <__stop_program>
+000001b6 <__stop_program>:
+ 1b6:	ff cf       	rjmp	.-2      	; 0x1b6 <__stop_program>

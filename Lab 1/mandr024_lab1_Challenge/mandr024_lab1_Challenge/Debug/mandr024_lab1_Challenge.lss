@@ -21,11 +21,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   8 .debug_frame  00000034  00000000  00000000  00001654  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00000433  00000000  00000000  00001688  2**0
+  9 .debug_str    00000439  00000000  00000000  00001688  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000047  00000000  00000000  00001abb  2**0
+ 10 .debug_loc    00000047  00000000  00000000  00001ac1  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000010  00000000  00000000  00001b02  2**0
+ 11 .debug_ranges 00000010  00000000  00000000  00001b08  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -273,7 +273,7 @@ int main(void)
 				
 		}
 		
-		if( tempNumTwo > 255 && tempNumTwo < 339)
+		if( tempNumTwo > 255 && tempNumTwo < 339) //range of 84 for 1 bit each estimate quick and easy
  18a:	8c 81       	ldd	r24, Y+4	; 0x04
  18c:	9d 81       	ldd	r25, Y+5	; 0x05
  18e:	8f 3f       	cpi	r24, 0xFF	; 255
@@ -374,7 +374,7 @@ int main(void)
  228:	20 83       	st	Z, r18
  22a:	11 c0       	rjmp	.+34     	; 0x24e <main+0x1b0>
 		}
-		else if( tempNumTwo > 675 && tempNumTwo < 765) // not 84 range but to accomodate
+		else if( tempNumTwo > 675 && tempNumTwo < 765) // not 84 range but to accommodate
  22c:	8c 81       	ldd	r24, Y+4	; 0x04
  22e:	9d 81       	ldd	r25, Y+5	; 0x05
  230:	84 3a       	cpi	r24, 0xA4	; 164

@@ -31,32 +31,22 @@ int main(void)
 		tempB = PINB;
 	
 		
-		for(unsigned char i = 0; i < 9; i++)
+		for(unsigned char i = 0; i < 8; i++)
 		{
 			if((GetBit(tempA, 0) == 1))
 			{
 				tempCount++;
-				tempA = tempA>>1;
 			}
-			else
-			{
-				tempA = tempA>>1;
-			}
-			
+			tempA = tempA>>1;
 		}
 		
-		for(unsigned char i = 0; i < 9; i++)
+		for(unsigned char i = 0; i < 8; i++)
 		{
 			if((GetBit(tempB, 0) == 1))
 			{
 				tempCount++;
-				tempB = tempB>>1;
 			}
-			else
-			{
-				tempB = tempB>>1;
-			}
-			
+			tempB = tempB>>1;
 		}
 		
 		PORTC = tempCount; 
