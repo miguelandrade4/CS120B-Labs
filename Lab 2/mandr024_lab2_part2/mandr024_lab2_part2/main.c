@@ -15,52 +15,45 @@ unsigned char SetBit(unsigned char x, unsigned char k, unsigned char b) {
 int main(void)
 {
 	DDRA = 0x00; PORTA = 0xFF; // Configure port A's 8 pins as inputs
-	DDRB = 0x00; PORTB = 0xFF; // Configure port B's 8 pins as inputs,
-	DDRC = 0xFF; PORTC = 0x00; // Configure port C's 8 pins as outputs
-	
-	unsigned char tempNum = 0x00;
-	unsigned char tempVal = 0x00;
+	DDRB = 0xFF; PORTB = 0x00; // Configure port C's 8 pins as outputs
 	
     while (1) //FIX ALGORITHM
     {
+		
+		signed char tempNum = 0x00;
+		signed char i = 0;
+		unsigned char driver = 0x00;
+		unsigned char key = 0x00;
+		unsigned char fastened = 0x00;
+		unsigned char tempVal = 0x00;
+		PORTB = 0x00;
+		
 		tempNum = PINA;
 		
-		if(tempNum <= 4)
+		if(PINA <= 4)
 		{
-			SetBit(tempVal, 6, 1);
+			tempVal = SetBit(tempVal, 6, 1);
+		}
+			
+		for(i = 5; i >= 0 ; i--)
+		{
+			if(tempNum > 0)
+			{
+				unsigned char x = i;
+				tempVal = SetBit(tempVal, x, 1);
+				tempNum = tempNum - 2;
+				
+				if (PINA == 9 && i == 1)
+				{
+					tempVal = SetBit(tempVal, 1, 0);
+					break;
+				}
+				
+			}
+			
 		}
 		
-		if(tempNum == 0x01 || tempNum == 0x02)
-		{
-			SetBit(tempVal, 6, 1);
-		}
-		
-		if(tempNum == 0x03 || tempNum == 0x04)
-		{
-			SetBit(tempVal, 6, 1);
-		}
-		
-		if(tempNum == 0x05 || tempNum == 0x06)
-		{
-			SetBit(tempVal, 6, 1);
-		}
-		
-		if(tempNum == 0x07 || tempNum == 0x08)
-		{
-			SetBit(tempVal, 6, 1);
-		}
-		
-		if(tempNum == 0x01 || tempNum == 0x02)
-		{
-			SetBit(tempVal, 6, 1);
-		}
-		
-		if(tempNum == 0x01 || tempNum == 0x02)
-		{
-			SetBit(tempVal, 6, 1);
-		}
-		
-		PORTC = tempVal;
+		PORTB = tempVal;
     }
 }
 
