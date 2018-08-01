@@ -11,6 +11,10 @@ unsigned char SetBit(unsigned char x, unsigned char k, unsigned char b) {
 	return (b ? x | (0x01 << k) : x & ~(0x01 << k));
 }
 
+unsigned char GetBit(unsigned char x, unsigned char k) {
+	return ((x & (0x01 << k)) != 0);
+}
+
 
 int main(void)
 {
@@ -21,54 +25,37 @@ int main(void)
     {
 		
 		signed char tempNum = 0x00;
+		signed char tempNum_two = 0x00;
 		signed char i = 0;
-		unsigned char driver = 0x00;
-		unsigned char key = 0x00;
-		unsigned char fastened = 0x00;
+		unsigned char key = 0x01;
 		unsigned char tempVal = 0x00;
 		PORTB = 0x00;
 		
 		tempNum = PINA;
 		
-		if(driver == 1)
+				
+		if(GetBit(tempNum, 4) && GetBit(tempNum, 6) == 0 && GetBit(tempNum, 5))
 		{
-			tempVal = SetBit(tempVal, 5, 1);
+			tempVal = SetBit(tempVal, 7, 1);
 		}
 		
-		if(fastened == 1)
-		{
-			tempVal = SetBit(tempVal, 5, 1);
-		}
+		tempNum_two = (PINA & 0x0F);
+		key = (PINA & 0x0F);
 		
-		if(key == 1)
-		{
-			tempVal = SetBit(tempVal, 4, 1);
-			
-			if(fastened == 0 && driver == 1)
-			{
-				tempVal = SetBit(tempVal, 7, 1);
-			}
-			
-			else
-			{
-				tempVal = SetBit(tempVal, 7, 0);
-			}
-		}
-		
-		if(PINA <= 4)
+		if(key <= 4)
 		{
 			tempVal = SetBit(tempVal, 6, 1);
 		}
 		
 		for(i = 5; i >= 0 ; i--)
 		{
-			if(tempNum > 0)
+			if(tempNum_two > 0)
 			{
 				unsigned char x = i;
 				tempVal = SetBit(tempVal, x, 1);
-				tempNum = tempNum - 2;
+				tempNum_two = tempNum_two - 2;
 				
-				if (PINA == 9 && i == 1)
+				if (key == 9 && i == 1)
 				{
 					tempVal = SetBit(tempVal, 1, 0);
 					break;
